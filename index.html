@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Connexion</title>
-    <link rel="icon" type="image/png" href="https://content.stucom.tech/isfsc/comb2/bron/images/pp-bron-centree.png">
+    <title>bron</title>
+    <link rel="icon" type="image/png" href="https://content.stucom.tech/isfsc/comb2/bron/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
@@ -122,7 +122,7 @@
     </style>
 </head>
 <body>
-    <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo.png" alt="Logo" class="logo">
+    <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo-slogan.png" alt="Logo" class="logo">
     
     <div class="login-box">
         <h2>Connexion</h2>
@@ -137,15 +137,11 @@
     </div>
 
     <script>
-        
-        const validPasswordHash = 'a40552869b33867dea766969613aa9cf93ed6cd835362f8e89176043cb6ec5b5';
-
-        async function hashPassword(password) {
-            const msgBuffer = new TextEncoder().encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
+        // Fonction de vérification obscurcie
+        function checkAccess(input) {
+            const parts = ['b', 'r', 'o', 'n', '2', '5', '2', '7'];
+            const valid = parts.join('');
+            return input === valid;
         }
 
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
@@ -154,9 +150,7 @@
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
             
-            const hashedInput = await hashPassword(password);
-            
-            if (hashedInput === validPasswordHash) {
+            if (checkAccess(password)) {
                 window.location.href = 'https://cms2527.commu.isfsc.be/';
             } else {
                 errorMessage.classList.add('show');

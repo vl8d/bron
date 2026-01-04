@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>bron</title>
+    <title>bron - 404</title>
     <link rel="icon" type="image/png" href="https://content.stucom.tech/isfsc/comb2/bron/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
@@ -34,139 +34,179 @@
             max-width: 300px;
             width: 100%;
             margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
         }
 
-        .login-box {
+        .error-container {
             background-color: #ffffff;
             border: 2px solid #000000;
-            padding: 40px;
+            padding: 60px 40px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
             width: 100%;
-            max-width: 400px;
-        }
-
-        .login-box h2 {
-            color: #000000;
-            margin-bottom: 20px;
             text-align: center;
-            font-size: 32px;
-            letter-spacing: 2px;
+            animation: slideUp 0.6s ease-out;
         }
 
-        .input-group {
+        .error-code {
+            font-size: 120px;
+            letter-spacing: 10px;
+            color: #000000;
             margin-bottom: 20px;
-            position: relative;
+            line-height: 1;
         }
 
-        input[type="password"],
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 45px 12px 12px;
-            border: 2px solid #000000;
-            border-radius: 4px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 1px;
-            background-color: #ffffff;
+        .error-title {
+            font-size: 36px;
+            letter-spacing: 3px;
             color: #000000;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 20px;
-            user-select: none;
-            color: #000000;
-        }
-
-        input[type="password"]:focus,
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #333333;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #333333;
+            margin-bottom: 15px;
         }
 
         .error-message {
-            color: #000000;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 16px;
+            font-size: 18px;
             letter-spacing: 1px;
-            display: none;
+            color: #000000;
+            opacity: 0.8;
+            margin-bottom: 30px;
         }
 
-        .error-message.show {
-            display: block;
+        .redirect-info {
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #000000;
+            opacity: 0.7;
+            margin-bottom: 25px;
+        }
+
+        .countdown {
+            font-size: 48px;
+            letter-spacing: 2px;
+            color: #000000;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #333333;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f0f0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-title {
+                font-size: 28px;
+            }
+
+            .error-message {
+                font-size: 16px;
+            }
+
+            .countdown {
+                font-size: 36px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo-slogan.png" alt="Logo" class="logo">
+    <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo-slogan.png" alt="Logo Bron" class="logo">
     
-    <div class="login-box">
-        <h2>Connexion</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Mot de passe" required>
-                <span class="toggle-password" id="togglePassword">👁️</span>
-            </div>
-            <button type="submit">Entrer</button>
-            <div class="error-message" id="errorMessage">Mot de passe incorrect</div>
-        </form>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page non trouvée</h1>
+        <p class="error-message">La page que vous recherchez n'existe pas ou a été déplacée.</p>
+        
+        <p class="redirect-info">Redirection automatique dans</p>
+        <div class="countdown" id="countdown">5</div>
+        
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+            <button onclick="history.back()" class="btn btn-secondary">Page précédente</button>
+        </div>
     </div>
 
     <script>
-        // Fonction de vérification obscurcie
-        function checkAccess(input) {
-            const parts = ['b', 'r', 'o', 'n', '2', '5', '2', '7'];
-            const valid = parts.join('');
-            return input === valid;
-        }
-
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        let timeLeft = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownTimer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
             
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            
-            if (checkAccess(password)) {
-                window.location.href = 'https://cms2527.commu.isfsc.be/';
-            } else {
-                errorMessage.classList.add('show');
-                document.getElementById('password').value = '';
-                setTimeout(() => {
-                    errorMessage.classList.remove('show');
-                }, 3000);
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                window.location.href = '/';
             }
-        });
+        }, 1000);
 
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '🙈';
+        // Permettre d'annuler la redirection en cliquant sur le bouton
+        document.querySelector('.btn-primary').addEventListener('click', function(e) {
+            clearInterval(countdownTimer);
         });
     </script>
 </body>

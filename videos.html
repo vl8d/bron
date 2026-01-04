@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>bron - vidéos</title>
+    <link rel="icon" type="image/png" href="https://content.stucom.tech/isfsc/comb2/bron/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            background-color: #ffffff;
+            background-image: url('https://content.stucom.tech/isfsc/comb2/bron/images/fond-accueil.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            max-width: 250px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 48px;
+            letter-spacing: 4px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #000000;
+            opacity: 0.7;
+        }
+
+        .authors-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .author-section {
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .author-name {
+            font-size: 32px;
+            letter-spacing: 3px;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .videos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .video-card {
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .video-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .play-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover .play-icon {
+            transform: scale(1.2);
+        }
+
+        .video-info {
+            flex: 1;
+        }
+
+        .video-title {
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 12px 30px;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000000;
+        }
+
+        .modal-info {
+            flex: 1;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+
+        .modal-author {
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #666666;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #000000;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-video-wrapper {
+            position: relative;
+            background-color: #000000;
+            padding-top: 56.25%;
+        }
+
+        .modal-video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .authors-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 36px;
+            }
+
+            .author-name {
+                font-size: 24px;
+            }
+
+            .video-title {
+                font-size: 18px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-author {
+                font-size: 14px;
+            }
+
+            .modal-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo-slogan.png" alt="Logo Bron" class="logo">
+            <h1 class="page-title">Galerie Vidéos</h1>
+            <p class="page-subtitle">Publications Organiques</p>
+        </div>
+
+        <a href="/" class="back-link">← Retour à l'accueil</a>
+
+        <div class="authors-container">
+            <!-- Section Constant Nemery -->
+            <div class="author-section">
+                <h2 class="author-name">Constant Nemery</h2>
+                <div class="videos-list">
+                    <div class="video-card" onclick="openVideo('(UGC) Où sont les pots ?', 'Constant Nemery', 'https://content.stucom.tech/isfsc/comb2/bron/digitale/publis-organiques/constant/videos/ugc-ou-sont-les-pots.mp4')">
+                        <div class="play-icon">▶</div>
+                        <div class="video-info">
+                            <div class="video-title">(UGC) Où sont les pots ?</div>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="openVideo('Présentation de produit - compléments', 'Constant Nemery', 'https://content.stucom.tech/isfsc/comb2/bron/digitale/publis-organiques/constant/videos/produit-physiomance-mitochondrie.mp4')">
+                        <div class="play-icon">▶</div>
+                        <div class="video-info">
+                            <div class="video-title">Présentation de produit - compléments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Vladimir Lorent -->
+            <div class="author-section">
+                <h2 class="author-name">Vladimir Lorent</h2>
+                <div class="videos-list">
+                    <div class="video-card" onclick="openVideo('(UGC) Bezoek van een Färm', 'Vladimir Lorent', 'https://content.stucom.tech/isfsc/comb2/bron/digitale/publis-organiques/vladimir/videos/ugc-bezoek-van-een-farm.mp4')">
+                        <div class="play-icon">▶</div>
+                        <div class="video-info">
+                            <div class="video-title">(UGC) Bezoek van een Färm</div>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="openVideo('Présentation de produit - yaourt sans lactose', 'Vladimir Lorent', 'https://content.stucom.tech/isfsc/comb2/bron/digitale/publis-organiques/vladimir/videos/produit-yaourt-sans-lactose.mp4')">
+                        <div class="play-icon">▶</div>
+                        <div class="video-info">
+                            <div class="video-title">Présentation de produit - yaourt sans lactose</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="videoModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-info">
+                    <div class="modal-title" id="modalTitle"></div>
+                    <div class="modal-author" id="modalAuthor"></div>
+                </div>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-video-wrapper">
+                <video id="modalVideo" controls autoplay>
+                    <source id="modalVideoSource" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const modalVideoSource = document.getElementById('modalVideoSource');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAuthor = document.getElementById('modalAuthor');
+
+        function openVideo(title, author, videoUrl) {
+            modalTitle.textContent = title;
+            modalAuthor.textContent = author;
+            modalVideoSource.src = videoUrl;
+            modalVideo.load();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== modal && event.target.classList.contains('close-btn') === false) {
+                return;
+            }
+            modal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer avec la touche Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

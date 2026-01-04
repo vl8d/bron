@@ -41,6 +41,8 @@
             gap: 20px;
             width: 100%;
             max-width: 850px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .destination-card {
@@ -50,6 +52,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             flex: 1;
+            min-width: 250px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -186,6 +189,10 @@
                 flex-direction: column;
                 max-width: 400px;
             }
+            
+            .destination-card {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -202,6 +209,11 @@
             <span class="checkmark">✓</span>
             <h2>Présentation</h2>
             <p>Accéder au jury</p>
+        </div>
+        <div class="destination-card" data-destination="videos">
+            <span class="checkmark">✓</span>
+            <h2>Vidéos</h2>
+            <p>Accéder aux vidéos</p>
         </div>
     </div>
 
@@ -260,6 +272,8 @@
                     window.location.href = 'https://bron.brussels/cms';
                 } else if (selectedDestination === 'presentation') {
                     window.location.href = 'https://bron.brussels/jury';
+                } else if (selectedDestination === 'videos') {
+                    window.location.href = 'https://bron.brussels/videos';
                 }
             } else {
                 errorMessage.textContent = 'Mot de passe incorrect';

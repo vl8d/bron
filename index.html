@@ -36,22 +36,83 @@
             margin-bottom: 40px;
         }
 
-        .login-box {
+        .login-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .destination-card {
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .destination-card.selected {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .destination-card h2 {
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .destination-card p {
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .destination-card.selected p {
+            opacity: 0.9;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            display: none;
+        }
+
+        .destination-card.selected .checkmark {
+            display: block;
+        }
+
+        .password-section {
             background-color: #ffffff;
             border: 2px solid #000000;
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 850px;
+            margin-top: 20px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        .login-box h2 {
-            color: #000000;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 32px;
-            letter-spacing: 2px;
+        .password-section.show {
+            opacity: 1;
+            max-height: 300px;
         }
 
         .input-group {
@@ -89,7 +150,7 @@
             border-color: #333333;
         }
 
-        button {
+        button[type="submit"] {
             width: 100%;
             padding: 12px;
             background-color: #000000;
@@ -103,7 +164,7 @@
             transition: background-color 0.3s;
         }
 
-        button:hover {
+        button[type="submit"]:hover {
             background-color: #333333;
         }
 
@@ -119,13 +180,32 @@
         .error-message.show {
             display: block;
         }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                max-width: 400px;
+            }
+        }
     </style>
 </head>
 <body>
     <img src="https://content.stucom.tech/isfsc/comb2/bron/images/logo-slogan.png" alt="Logo" class="logo">
     
-    <div class="login-box">
-        <h2>Connexion</h2>
+    <div class="login-container">
+        <div class="destination-card" data-destination="website">
+            <span class="checkmark">✓</span>
+            <h2>Site web</h2>
+            <p>Accéder au CMS</p>
+        </div>
+        <div class="destination-card" data-destination="presentation">
+            <span class="checkmark">✓</span>
+            <h2>Présentation</h2>
+            <p>Accéder au jury</p>
+        </div>
+    </div>
+
+    <div class="password-section" id="passwordSection">
         <form id="loginForm">
             <div class="input-group">
                 <input type="password" id="password" placeholder="Mot de passe" required>
@@ -137,12 +217,28 @@
     </div>
 
     <script>
-        // Fonction de vérification obscurcie
         function checkAccess(input) {
             const parts = ['b', 'r', 'o', 'n', '2', '5', '2', '7'];
             const valid = parts.join('');
             return input === valid;
         }
+
+        let selectedDestination = null;
+        const passwordSection = document.getElementById('passwordSection');
+        const destinationCards = document.querySelectorAll('.destination-card');
+
+        destinationCards.forEach(card => {
+            card.addEventListener('click', function() {
+                destinationCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedDestination = this.dataset.destination;
+                passwordSection.classList.add('show');
+                
+                setTimeout(() => {
+                    document.getElementById('password').focus();
+                }, 400);
+            });
+        });
 
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -150,9 +246,23 @@
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
             
+            if (!selectedDestination) {
+                errorMessage.textContent = 'Veuillez choisir une destination';
+                errorMessage.classList.add('show');
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+                return;
+            }
+            
             if (checkAccess(password)) {
-                window.location.href = 'https://cms2527.commu.isfsc.be/';
+                if (selectedDestination === 'website') {
+                    window.location.href = 'https://bron.brussels/cms';
+                } else if (selectedDestination === 'presentation') {
+                    window.location.href = 'https://bron.brussels/jury';
+                }
             } else {
+                errorMessage.textContent = 'Mot de passe incorrect';
                 errorMessage.classList.add('show');
                 document.getElementById('password').value = '';
                 setTimeout(() => {
@@ -161,7 +271,6 @@
             }
         });
 
-        // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
